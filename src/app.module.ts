@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ClassificationModule } from './module/classification/classification.module';
-import { SystemModule } from './module/system/system.module';
+import { ClassificationModule } from './modules/classification/classification.module';
+import { SystemModule } from './modules/system/system.module';
 
 @Module({
   imports: [
