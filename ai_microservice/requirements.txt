@@ -3,3 +3,4 @@ torchvision
 dotenv
 psutil
 flask
+gunicorn
