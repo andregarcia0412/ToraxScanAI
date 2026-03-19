@@ -117,7 +117,7 @@ def accuracy_fn(y_true, y_pred):
 
 loss_fn = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(params=model.parameters(), lr=0.001)
-epochs = 50
+epochs = 100
 
 try:
     for epoch in range(epochs):
