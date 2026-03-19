@@ -6,6 +6,7 @@ from torch.utils.data import Subset
 from torch.utils.data import DataLoader
 from src.model.ToraxRadiographyModel import ToraxRadiographyModel
 from torchvision.datasets import ImageFolder
+from pathlib import Path
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -118,21 +119,20 @@ loss_fn = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(params=model.parameters(), lr=0.001)
 epochs = 50
 
-for epoch in range(epochs):
-    print(f"Epoch: {epoch}")
-    train_step(model=model, data_loader=train_loader, loss_fn=loss_fn, optimizer=optimizer, accuracy_fn=accuracy_fn, device=device)
-    test_loss, test_acc = test_step(model, test_loader, loss_fn, accuracy_fn)
+try:
+    for epoch in range(epochs):
+        print(f"Epoch: {epoch}")
+        train_step(model=model, data_loader=train_loader, loss_fn=loss_fn, optimizer=optimizer, accuracy_fn=accuracy_fn, device=device)
+        test_loss, test_acc = test_step(model, test_loader, loss_fn, accuracy_fn)
 
-    if test_acc > 90:
-        break
+except KeyboardInterrupt:
+   print("\nTraining interrupted")
+finally: 
+    MODEL_PATH = Path("src/model")
+    MODEL_PATH.mkdir(parents=True, exist_ok=True)
 
-from pathlib import Path
+    MODEL_NAME = "torax_radiography_disease_classification_model_v2.pth"
+    MODEL_SAVE_PATH = MODEL_PATH / MODEL_NAME
 
-MODEL_PATH = Path("model")
-MODEL_PATH.mkdir(parents=True, exist_ok=True)
-
-MODEL_NAME = "torax_radiography_disease_classification_model_v2.pth"
-MODEL_SAVE_PATH = MODEL_PATH / MODEL_NAME
-
-print(f"Saving to: {MODEL_SAVE_PATH}")
-torch.save(model.state_dict(), MODEL_SAVE_PATH)
+    print(f"Saving to: {MODEL_SAVE_PATH}")
+    torch.save(model.state_dict(), MODEL_SAVE_PATH)
