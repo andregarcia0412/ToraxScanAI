@@ -42,7 +42,6 @@ train_size = int(0.8 * dataset_size)
 
 train_indices = indices[:train_size]
 train_dataset = Subset(full_train_dataset, train_indices)
-
 test_indices = indices[train_size:]
 test_dataset = Subset(full_test_dataset, test_indices)
 
@@ -50,16 +49,12 @@ train_loader = DataLoader(
     train_dataset,
     batch_size=32,
     shuffle=True,
-    num_workers=4,
-    pin_memory=True,
 )
 
 test_loader = DataLoader(
     test_dataset,
     batch_size=32,
     shuffle=False,
-    num_workers=4,
-    pin_memory=True,
 )
 
 model = ToraxRadiographyModel(input_shape=3, hidden_units=32, output_shape=4).to(device)
