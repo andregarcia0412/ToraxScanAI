@@ -33,38 +33,38 @@ test_transform = transforms.Compose([
     )
 ])
 
-full_train_dataset = ImageFolder(
-   root=os.path.join(BASE_DIR, "../dataset"),
-   transform=train_transform
-)
-
-full_test_dataset = ImageFolder(
-   root=os.path.join(BASE_DIR, "../dataset"),
-   transform=test_transform
-)
+full_train_dataset = ImageFolder(root=os.path.join(BASE_DIR, "../dataset"), transform=train_transform)
+full_test_dataset = ImageFolder(root=os.path.join(BASE_DIR, "../dataset"), transform=test_transform)
 
 dataset_size = len(full_train_dataset)
 indices = torch.randperm(dataset_size).tolist()
 train_size = int(0.8 * dataset_size)
 
-train_dataset = Subset(full_train_dataset, indices[:train_size])
-test_dataset = Subset(full_test_dataset, indices[train_size:])
+train_indices = indices[:train_size]
+train_dataset = Subset(full_train_dataset, train_indices)
+
+test_indices = indices[train_size:]
+test_dataset = Subset(full_test_dataset, test_indices)
 
 train_loader = DataLoader(
     train_dataset,
     batch_size=32,
-    shuffle=True
+    shuffle=True,
+    num_workers=4,
+    pin_memory=True,
 )
 
 test_loader = DataLoader(
     test_dataset,
     batch_size=32,
-    shuffle=False
+    shuffle=False,
+    num_workers=4,
+    pin_memory=True,
 )
 
 model = ToraxRadiographyModel(input_shape=3, hidden_units=32, output_shape=4).to(device)
 
-def train_step(model: torch.nn.Module, data_loader: torch.utils.data.DataLoader, loss_fn: torch.nn.Module, optimizer: torch.optim.Optimizer, accuracy_fn, scheduler=None, device: torch.device=device):
+def train_step(model: torch.nn.Module, data_loader: torch.utils.data.DataLoader, loss_fn: torch.nn.Module, optimizer: torch.optim.Optimizer, accuracy_fn, device: torch.device=device):
     train_loss, train_acc = 0,0
 
     model.train()
@@ -74,7 +74,7 @@ def train_step(model: torch.nn.Module, data_loader: torch.utils.data.DataLoader,
         y_pred = model(X)
 
         loss = loss_fn(y_pred, y)
-        train_loss += loss
+        train_loss += loss.item()
         train_acc += accuracy_fn(y, y_pred.argmax(dim=1))
 
         optimizer.zero_grad()
@@ -82,9 +82,6 @@ def train_step(model: torch.nn.Module, data_loader: torch.utils.data.DataLoader,
         loss.backward()
 
         optimizer.step()
-
-        if scheduler:
-            scheduler.step()
         
     train_loss /= len(data_loader)
     train_acc /= len(data_loader)
@@ -100,7 +97,7 @@ def test_step(model: torch.nn.Module, data_loader: torch.utils.data.DataLoader, 
 
       test_pred = model(X)
 
-      test_loss += loss_fn(test_pred, y)
+      test_loss += loss_fn(test_pred, y).item()
       test_acc += accuracy_fn(y, test_pred.argmax(dim=1))
 
     test_loss /= len(data_loader)
