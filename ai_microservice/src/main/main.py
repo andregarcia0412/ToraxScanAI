@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 from src.inference.image_handler import load_and_preprocess_image
+from src.inference.predictor import predict_image
 import os
 import time
 import psutil
@@ -20,6 +21,7 @@ def predict():
         image_tensor = load_and_preprocess_image(
             request.files["image"]
         )
+        return jsonify(predict_image(image_tensor)), 200
 
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
