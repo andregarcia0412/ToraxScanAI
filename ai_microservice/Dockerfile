@@ -7,6 +7,17 @@ WORKDIR /app
 
 COPY requirements.txt .
 
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    gcc \
+    python3-dev \
+    libjpeg-dev \
+    zlib1g-dev \
+    libpng-dev \
+    libfreetype6-dev \
+    libwebp-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
