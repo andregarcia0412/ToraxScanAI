@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Controller,
+  HttpCode,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -13,6 +14,7 @@ export class ClassificationController {
   constructor(private readonly classificationService: ClassificationService) {}
 
   @Post('analyze')
+  @HttpCode(200)
   @UseInterceptors(FileInterceptor('image'))
   async analyzeImage(@UploadedFile() file: Express.Multer.File) {
     if (!file) {
