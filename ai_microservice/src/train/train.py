@@ -123,7 +123,7 @@ finally:
     MODEL_PATH = Path("src/model")
     MODEL_PATH.mkdir(parents=True, exist_ok=True)
 
-    MODEL_NAME = "torax_radiography_disease_classification_model_v2.pth"
+    MODEL_NAME = "torax_radiography_disease_classification_model_v3.pth"
     MODEL_SAVE_PATH = MODEL_PATH / MODEL_NAME
 
     print(f"Saving to: {MODEL_SAVE_PATH}")
