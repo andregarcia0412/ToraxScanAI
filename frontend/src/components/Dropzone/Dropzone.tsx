@@ -1,6 +1,8 @@
 import React from "react";
 import "./style.dropzone.css";
 import Upload from "../../assets/upload.svg";
+import UploadWhite from "../../assets/upload_white.svg";
+import { FullButton } from "../Button/FullButton/FullButton";
 
 type DropzoneProps = {
   setEnabled?: (enabled: boolean) => void;
@@ -98,6 +100,7 @@ export const Dropzone = ({
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
+        onClick={() => inputRef.current?.click()}
       >
         {preview && (
           <img className="preview-image" src={preview} alt="Preview" />
@@ -121,6 +124,23 @@ export const Dropzone = ({
           hidden
           onChange={handleInputChange}
         />
+      </div>
+      <div className="dropzone-button">
+        {hasFile ? (
+          <FullButton
+            title="Iniciar Análise"
+            width={"100%"}
+            icon={UploadWhite}
+            loading={loading}
+          />
+        ) : (
+          <FullButton
+            title="Nova Análise"
+            width="100%"
+            variant="outline"
+            onClick={() => inputRef.current?.click()}
+          />
+        )}
       </div>
     </div>
   );

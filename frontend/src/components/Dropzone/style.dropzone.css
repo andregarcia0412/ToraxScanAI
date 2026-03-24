@@ -33,7 +33,7 @@
 }
 
 .dropzone .preview-image {
-  margin-top: 16px;
+  margin: 16px;
   max-width: 100%;
   border-radius: 8px;
   overflow: hidden;
