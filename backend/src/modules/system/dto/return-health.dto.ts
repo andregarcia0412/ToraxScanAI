@@ -1,7 +1,13 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 export class ReturnHealthDto {
+  @ApiProperty()
   status: string;
+  @ApiProperty()
   uptime: number;
+  @ApiProperty()
   cpuPercent: number;
+  @ApiProperty()
   virtualMemoryPercent: number;
 
   constructor(
