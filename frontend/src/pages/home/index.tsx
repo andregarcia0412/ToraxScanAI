@@ -5,6 +5,7 @@ import { Header } from "../../components/Header/Header";
 import React from "react";
 import { ClassificationService } from "../../api/service/classification.service";
 import type { ClassificationDto } from "../../dto/classification.dto";
+import { ResultCard } from "../../components/Card/ResultCard";
 
 export const Home = () => {
   const [classificationResponse, setClassificationResponse] =
@@ -56,16 +57,20 @@ export const Home = () => {
 
         <div className="home-column home-column-right">
           <div className="home-card home-card-fill">
-            <div className="home-card-waiting">
-              <div className="vital-signs-grey-icon">
-                <img src={VitalSignsGrey} />
+            {!classificationResponse ? (
+              <div className="home-card-waiting">
+                <div className="vital-signs-grey-icon">
+                  <img src={VitalSignsGrey} />
+                </div>
+                <h2>Aguardando Análise</h2>
+                <p>
+                  Faça upload de uma imagem de raio-X e clique em "Iniciar
+                  Análise" para obter o diagnóstico
+                </p>
               </div>
-              <h2>Aguardando Análise</h2>
-              <p>
-                Faça upload de uma imagem de raio-X e clique em "Iniciar
-                Análise" para obter o diagnóstico
-              </p>
-            </div>
+            ) : (
+              <ResultCard classification={classificationResponse} />
+            )}
           </div>
         </div>
       </div>
