@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import FormData from 'form-data';
 import { ReturnClassficationDto } from './dto/return-classification.dto';
 import { ConfigService } from '@nestjs/config';
@@ -7,6 +7,8 @@ import axios from 'axios';
 @Injectable()
 export class ClassificationService {
   constructor(private configService: ConfigService) {}
+
+  private readonly logger = new Logger(ClassificationService.name);
 
   async analyzeImage(imageBuffer: Buffer): Promise<ReturnClassficationDto> {
     const formData = new FormData();
@@ -18,14 +20,19 @@ export class ClassificationService {
     const microserviceUrl =
       this.configService.getOrThrow<string>('MICROSERVICE_URL');
 
-    const { data } = await axios.post<ReturnClassficationDto>(
-      `${microserviceUrl}/predict`,
-      formData,
-      {
-        headers: formData.getHeaders(),
-      },
-    );
-
-    return data;
+    try {
+      const { data } = await axios.post<ReturnClassficationDto>(
+        `${microserviceUrl}/predict`,
+        formData,
+        {
+          headers: formData.getHeaders(),
+        },
+      );
+      return data;
+    } catch (e) {
+      const message = e instanceof Error ? e.message : 'Unknown Error';
+      this.logger.error(`Error predicting image: ${message}`);
+      throw new BadRequestException(message);
+    }
   }
 }
