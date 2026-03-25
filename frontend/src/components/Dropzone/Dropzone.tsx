@@ -7,8 +7,7 @@ import { FullButton } from "../Button/FullButton/FullButton";
 type DropzoneProps = {
   setEnabled?: (enabled: boolean) => void;
   setOuterImagePreview?: (preview: string | null) => void;
-  analyzeOnClick?: () => void;
-  setFile?: (file: File | null) => void;
+  analyzeOnClick?: (file: File) => void;
   setShowToast?: (showToast: boolean) => void;
   setToastText?: (text: string) => void;
   loading: boolean;
@@ -18,7 +17,6 @@ export const Dropzone = ({
   setEnabled,
   setOuterImagePreview,
   analyzeOnClick,
-  setFile,
   setShowToast,
   setToastText,
   loading,
@@ -26,22 +24,21 @@ export const Dropzone = ({
   const inputRef = React.useRef<HTMLInputElement | null>(null);
   const [preview, setPreview] = React.useState<string | null>(null);
   const [isDragging, setIsDragging] = React.useState<boolean>(false);
-  const [hasFile, setHasFile] = React.useState<boolean>(false);
+  const [file, setFile] = React.useState<File | null>(null);
   const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
 
   const resetPreview = () => {
     setPreview(null);
-    setHasFile(false);
-    if (setFile) setFile(null);
+    setFile(null);
     if (setOuterImagePreview) setOuterImagePreview(null);
   };
 
-  const handleFile = (file: File | undefined) => {
+  const handleFile = (file: File | null) => {
     if (!file) {
       return;
     }
 
-    setHasFile(true);
+    setFile(file);
 
     if (!allowedTypes.includes(file.type)) {
       if (setToastText)
@@ -67,7 +64,6 @@ export const Dropzone = ({
       if (setOuterImagePreview) setOuterImagePreview(reader.result as string);
     };
     reader.readAsDataURL(file);
-    if (setFile) setFile(file);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -105,7 +101,7 @@ export const Dropzone = ({
         {preview && (
           <img className="preview-image" src={preview} alt="Preview" />
         )}
-        {!hasFile && (
+        {!file && (
           <div className="dropzone-items">
             <div className="upload-icon">
               <img src={Upload} />
@@ -126,12 +122,15 @@ export const Dropzone = ({
         />
       </div>
       <div className="dropzone-button">
-        {hasFile ? (
+        {file ? (
           <FullButton
             title="Iniciar Análise"
             width={"100%"}
             icon={UploadWhite}
             loading={loading}
+            onClick={() => {
+              if (analyzeOnClick) analyzeOnClick(file);
+            }}
           />
         ) : (
           <FullButton

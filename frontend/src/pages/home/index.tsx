@@ -2,14 +2,37 @@ import { Dropzone } from "../../components/Dropzone/Dropzone";
 import "./style.css";
 import VitalSignsGrey from "../../assets/vital_signs_grey.svg";
 import { Header } from "../../components/Header/Header";
+import React from "react";
+import { ClassificationService } from "../../api/service/classification.service";
+import type { ClassificationDto } from "../../dto/classification.dto";
 
 export const Home = () => {
+  const [classificationResponse, setClassificationResponse] =
+    React.useState<ClassificationDto | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(false);
+
+  const handleUpload = async (image: File) => {
+    if (loading) return;
+
+    setLoading(true);
+
+    try {
+      const response = await ClassificationService.classifyImage(image);
+      console.log(response);
+      setClassificationResponse(response);
+    } catch (e) {
+      throw e;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <Header />
       <div className="home-layout">
         <div className="home-column home-column-left">
-          <Dropzone loading={false} analyzeOnClick={() => {}} />
+          <Dropzone loading={loading} analyzeOnClick={handleUpload} />
 
           <div className="home-card about-card">
             <h1>Sobre o sistema</h1>
