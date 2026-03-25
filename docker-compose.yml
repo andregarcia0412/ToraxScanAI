@@ -33,3 +33,16 @@ services:
       - FLASK_ENV=development
       - PYTHONUNBUFFERED=1
     restart: unless-stopped
+  
+  frontend:
+    build: ./frontend
+    container_name: torax_radiography_frontend
+    restart: always
+    depends_on:
+      - backend
+    command: npm run dev -- --host 0.0.0.0
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
