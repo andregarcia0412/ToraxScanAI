@@ -1,4 +1,4 @@
-import type { ClassificationDto } from "../../dto/classification.dto";
+import type { ClassificationDto } from "../../data/dto/classification.dto";
 import { api } from "../client";
 
 export const ClassificationService = {

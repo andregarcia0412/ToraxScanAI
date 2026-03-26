@@ -1,0 +1,151 @@
+.result-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background-color: #fff;
+  border: 2px solid;
+}
+
+.result-card-header {
+  display: flex;
+  width: 100%;
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+  padding: 24px;
+  justify-content: space-between;
+}
+
+.result-card-title {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  & h2 {
+    font-size: 20px;
+    font-weight: normal;
+  }
+
+  & p {
+    color: #717182;
+  }
+
+  & img {
+    height: 32px;
+    width: 32px;
+  }
+}
+
+.result-card-title-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.result-card-percentage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.result-card-body {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+}
+
+.result-card-progress {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.result-card-progress-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 14px;
+  color: #45454e;
+}
+
+.result-card-details {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+  padding: 16px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.result-card-details-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  & img {
+    height: 24px;
+    width: 24px;
+    transform: scaleX(-1);
+  }
+}
+
+.result-card-details-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  color: #45454e;
+}
+
+.result-card.Covid {
+  border-color: #f87171;
+}
+
+.result-card.Normal {
+  border-color: #4ade80;
+}
+
+.result-card.Viral_Pneumonia {
+  border-color: #fb923c;
+}
+
+.result-card.Lung_Opacity {
+  border-color: #facc15;
+}
+
+.result-card-header.Covid {
+  background-color: #fee2e2;
+  & h2 {
+    color: #b91c1c;
+  }
+}
+
+.result-card-header.Normal {
+  background-color: #dcfce7;
+  & h2 {
+    color: #15803d;
+  }
+}
+
+.result-card-header.Viral_Pneumonia {
+  background-color: #ffedd5;
+  & h2 {
+    color: #c2410c;
+  }
+}
+
+.result-card-header.Lung_Opacity {
+  background-color: #fef9c3;
+  & h2 {
+    color: #a16207;
+  }
+}

@@ -4,8 +4,9 @@ import VitalSignsGrey from "../../assets/vital_signs_grey.svg";
 import { Header } from "../../components/Header/Header";
 import React from "react";
 import { ClassificationService } from "../../api/service/classification.service";
-import type { ClassificationDto } from "../../dto/classification.dto";
+import type { ClassificationDto } from "../../data/dto/classification.dto";
 import { ResultCard } from "../../components/Card/ResultCard";
+import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
 
 export const Home = () => {
   const [classificationResponse, setClassificationResponse] =
@@ -55,9 +56,11 @@ export const Home = () => {
           </div>
         </div>
 
-        <div className="home-column home-column-right">
-          <div className="home-card home-card-fill">
-            {!classificationResponse ? (
+        <div
+          className={`home-column ${classificationResponse ? "home-column-right-result" : "home-column-right"}`}
+        >
+          {!classificationResponse ? (
+            <div className="home-card home-card-fill">
               <div className="home-card-waiting">
                 <div className="vital-signs-grey-icon">
                   <img src={VitalSignsGrey} />
@@ -68,10 +71,10 @@ export const Home = () => {
                   Análise" para obter o diagnóstico
                 </p>
               </div>
-            ) : (
-              <ResultCard classification={classificationResponse} />
-            )}
-          </div>
+            </div>
+          ) : (
+            <ResultCard classification={classificationResponse} />
+          )}
         </div>
       </div>
     </div>
