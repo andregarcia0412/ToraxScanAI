@@ -30,9 +30,10 @@ export class ClassificationService {
       );
       return data;
     } catch (e) {
-      const message = e instanceof Error ? e.message : 'Unknown Error';
-      this.logger.error(`Error predicting image: ${message}`);
-      throw new BadRequestException(message);
+      this.logger.error(
+        `Error predicting image: message=${e?.message} code=${e?.code} address=${e?.address} port=${e?.port}`,
+      );
+      throw new BadRequestException(e?.message ?? 'Unknown Error');
     }
   }
 }
