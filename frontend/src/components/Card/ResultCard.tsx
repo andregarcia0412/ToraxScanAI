@@ -39,7 +39,7 @@ export const ResultCard = ({ classification }: ResultCardProps) => {
     <div className={`result-card ${classification.className}`}>
       <div className={`result-card-header ${classification.className}`}>
         <div className="result-card-title">
-          <img src={imageIcon} />
+          <img src={imageIcon} draggable={false} />
           <div className="result-card-title-inner">
             <h2>{result.name}</h2>
             <p>Resultado da análise por IA</p>

@@ -5,7 +5,7 @@ export const Header = () => {
   return (
     <div className="header">
       <div className="header-icon">
-        <img src={VitalSignsWhite} />
+        <img src={VitalSignsWhite} draggable={false}/>
       </div>
       <div className="header-title">
         <h1>ToraxScan AI</h1>
