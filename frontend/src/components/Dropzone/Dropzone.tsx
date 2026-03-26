@@ -3,10 +3,9 @@ import "./style.dropzone.css";
 import Upload from "../../assets/upload.svg";
 import UploadWhite from "../../assets/upload_white.svg";
 import { FullButton } from "../Button/FullButton/FullButton";
+import { Toast } from "../Toast/Toast";
 
 type DropzoneProps = {
-  setEnabled?: (enabled: boolean) => void;
-  setOuterImagePreview?: (preview: string | null) => void;
   analyzeOnClick?: (file: File) => void;
   setShowToast?: (showToast: boolean) => void;
   setToastText?: (text: string) => void;
@@ -14,8 +13,6 @@ type DropzoneProps = {
 };
 
 export const Dropzone = ({
-  setEnabled,
-  setOuterImagePreview,
   analyzeOnClick,
   setShowToast,
   setToastText,
@@ -30,7 +27,6 @@ export const Dropzone = ({
   const resetPreview = () => {
     setPreview(null);
     setFile(null);
-    if (setOuterImagePreview) setOuterImagePreview(null);
   };
 
   const handleFile = (file: File | null) => {
@@ -61,7 +57,6 @@ export const Dropzone = ({
     const reader = new FileReader();
     reader.onload = () => {
       setPreview(reader.result as string);
-      if (setOuterImagePreview) setOuterImagePreview(reader.result as string);
     };
     reader.readAsDataURL(file);
   };
@@ -104,7 +99,7 @@ export const Dropzone = ({
         {!file && (
           <div className="dropzone-items">
             <div className="upload-icon">
-              <img src={Upload} />
+              <img src={Upload} draggable={false} />
             </div>
             <p className="dropzone-title">
               Clique ou arraste uma imagem para fazer upload

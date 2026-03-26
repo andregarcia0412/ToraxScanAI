@@ -1,0 +1,42 @@
+.toast {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  min-width: 200px;
+  padding: 12px 20px;
+  position: fixed;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 20px;
+  animation: slideRight 0.5s ease-out forwards;
+  top: 5%;
+}
+
+.active {
+  animation: slideRight 1s ease-out forwards;
+}
+
+.inactive {
+  animation: slideLeft 1s ease-in forwards;
+}
+
+@keyframes slideRight {
+  0% {
+    left: -50%;
+  }
+
+  100% {
+    left: 3%;
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    left: 3%;
+  }
+
+  100% {
+    left: -50%;
+  }
+}

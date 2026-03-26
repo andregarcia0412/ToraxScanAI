@@ -1,17 +1,19 @@
-import { Dropzone } from "../../components/Dropzone/Dropzone";
-import "./style.css";
-import VitalSignsGrey from "../../assets/vital_signs_grey.svg";
-import { Header } from "../../components/Header/Header";
 import React from "react";
 import { ClassificationService } from "../../api/service/classification.service";
-import type { ClassificationDto } from "../../data/dto/classification.dto";
+import VitalSignsGrey from "../../assets/vital_signs_grey.svg";
 import { ResultCard } from "../../components/Card/ResultCard";
-import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
+import { Dropzone } from "../../components/Dropzone/Dropzone";
+import { Header } from "../../components/Header/Header";
+import type { ClassificationDto } from "../../data/dto/classification.dto";
+import "./style.css";
+import { Toast } from "../../components/Toast/Toast";
 
 export const Home = () => {
   const [classificationResponse, setClassificationResponse] =
     React.useState<ClassificationDto | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [showToast, setShowToast] = React.useState<boolean>(false);
+  const [toastText, setToastText] = React.useState<string>("");
 
   const handleUpload = async (image: File) => {
     if (loading) return;
@@ -34,7 +36,12 @@ export const Home = () => {
       <Header />
       <div className="home-layout">
         <div className="home-column home-column-left">
-          <Dropzone loading={loading} analyzeOnClick={handleUpload} />
+          <Dropzone
+            loading={loading}
+            analyzeOnClick={handleUpload}
+            setShowToast={setShowToast}
+            setToastText={setToastText}
+          />
 
           <div className="home-card about-card">
             <h1>Sobre o sistema</h1>
@@ -63,7 +70,7 @@ export const Home = () => {
             <div className="home-card home-card-fill">
               <div className="home-card-waiting">
                 <div className="vital-signs-grey-icon">
-                  <img src={VitalSignsGrey} />
+                  <img src={VitalSignsGrey} draggable={false} />
                 </div>
                 <h2>Aguardando Análise</h2>
                 <p>
@@ -77,6 +84,13 @@ export const Home = () => {
           )}
         </div>
       </div>
+      {showToast && (
+        <Toast
+          backgroundColor="#FF2C2C"
+          setShowToast={setShowToast}
+          text={toastText}
+        />
+      )}
     </div>
   );
 };
