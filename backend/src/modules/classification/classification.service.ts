@@ -3,6 +3,7 @@ import FormData from 'form-data';
 import { ReturnClassficationDto } from './dto/return-classification.dto';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
+import { AnalyzeResponseDto } from './dto/analyze-response.dto';
 
 @Injectable()
 export class ClassificationService {
@@ -21,14 +22,14 @@ export class ClassificationService {
       this.configService.getOrThrow<string>('MICROSERVICE_URL');
 
     try {
-      const { data } = await axios.post<ReturnClassficationDto>(
+      const { data } = await axios.post<AnalyzeResponseDto>(
         `${microserviceUrl}/predict`,
         formData,
         {
           headers: formData.getHeaders(),
         },
       );
-      return data;
+      return new ReturnClassficationDto(data.class_name, data.confidence);
     } catch (e) {
       this.logger.error(
         `Error predicting image: message=${e?.message} code=${e?.code} address=${e?.address} port=${e?.port}`,
