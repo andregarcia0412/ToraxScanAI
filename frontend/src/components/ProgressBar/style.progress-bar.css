@@ -1,0 +1,32 @@
+.progress-bar-outer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #e5e7eb;
+  width: 100%;
+  height: 16px;
+  border-radius: 1000px;
+}
+
+.progress-bar-inner {
+  position: absolute;
+  flex: 1;
+  height: 16px;
+  border-radius: 1000px;
+}
+
+.very-high {
+  background: #22c55e;
+}
+
+.high {
+  background: #3b82f6;
+}
+
+.moderate {
+  background: #eab308;
+}
+
+.low {
+  background: #f97316;
+}
