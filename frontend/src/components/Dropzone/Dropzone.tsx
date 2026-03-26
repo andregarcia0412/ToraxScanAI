@@ -82,7 +82,7 @@ export const Dropzone = ({
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleFile(e.target.files?.[0]);
+    handleFile(e.target.files?.[0] ?? null);
   };
 
   return (
