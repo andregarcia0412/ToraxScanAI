@@ -2,8 +2,6 @@
 
 # ToraxScan AI
 
-Plataforma full stack para classificacao de doencas em radiografias de torax, usando IA para apoiar triagem clinica com retorno de classe prevista e nivel de confianca.
-
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)
