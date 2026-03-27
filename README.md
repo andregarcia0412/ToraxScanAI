@@ -254,5 +254,3 @@ docker compose logs -f microservice
 - Backend com Swagger ativo.
 - Frontend com fluxo de upload e exibicao de resultado.
 - Microservico com inferencia carregando modelo `v2`.
-
-Se quiser, no proximo passo eu posso criar uma versao bilingue (PT/EN) sem perder esse layout.
