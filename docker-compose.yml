@@ -1,6 +1,17 @@
 version: "3.9"
 
 services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: toraxscan_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_data:/var/lib/postgres/data
+
   backend:
     build:
       context: ./backend
@@ -16,6 +27,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
     depends_on:
       - microservice
+      - db
     restart: unless-stopped
     
   microservice:
@@ -46,3 +58,6 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+
+volumes:
+  db_data:
