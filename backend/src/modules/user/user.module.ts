@@ -10,6 +10,8 @@ import { FindUserByIdUseCase } from './use-case/find-user-by-id.use-case';
 import { FindUserByEmailUseCase } from './use-case/find-user-by-email.use-case';
 import { UpdateUserUseCase } from './use-case/update-user.use-case';
 import { DeleteUserUseCase } from './use-case/delete-user.use-case';
+import { HashProviderPort } from 'src/shared/providers/hash/hash.provider.port';
+import { BcryptProvider } from 'src/shared/providers/hash/bcrypt.provider';
 
 @Module({
   controllers: [UserController],
@@ -17,6 +19,10 @@ import { DeleteUserUseCase } from './use-case/delete-user.use-case';
     {
       provide: UserRepositoryPort,
       useClass: UserRepository,
+    },
+    {
+      provide: HashProviderPort,
+      useClass: BcryptProvider,
     },
     CreateUserUseCase,
     FindUserByIdUseCase,
@@ -26,5 +32,6 @@ import { DeleteUserUseCase } from './use-case/delete-user.use-case';
     UserService,
   ],
   imports: [TypeOrmModule.forFeature([User])],
+  exports: [UserService, UserRepositoryPort],
 })
 export class UserModule {}
