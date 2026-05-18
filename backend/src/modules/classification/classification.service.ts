@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import FormData from 'form-data';
 import { ReturnClassficationDto } from './dto/return-classification.dto';
 import { ConfigService } from '@nestjs/config';
@@ -31,10 +36,14 @@ export class ClassificationService {
       );
       return new ReturnClassficationDto(data.class_name, data.confidence);
     } catch (e) {
-      this.logger.error(
-        `Error predicting image: message=${e?.message} code=${e?.code} address=${e?.address} port=${e?.port}`,
-      );
-      throw new BadRequestException(e?.message ?? 'Unknown Error');
+      if (axios.isAxiosError(e)) {
+        this.logger.error(
+          `Error predicting image: message=${e?.message} code=${e?.code}`,
+        );
+        throw new BadRequestException(e?.response?.data ?? e?.message);
+      }
+
+      throw new InternalServerErrorException('Unknown Error');
     }
   }
 }
