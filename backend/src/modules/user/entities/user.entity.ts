@@ -11,9 +11,13 @@ export class User {
   @Column({ type: 'varchar', length: 32, unique: false })
   name: string;
 
-  constructor(id: string, email: string, name: string) {
+  @Column({ type: 'varchar', length: 64, unique: false })
+  password: string;
+
+  constructor(id: string, email: string, name: string, password: string) {
     this.id = id;
     this.email = email;
     this.name = name;
+    this.password = password;
   }
 }
