@@ -4,6 +4,7 @@ import { ClassificationModule } from './modules/classification/classification.mo
 import { SystemModule } from './modules/system/system.module';
 import { UserModule } from './modules/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     ClassificationModule,
     SystemModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
